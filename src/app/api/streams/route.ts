@@ -32,8 +32,20 @@ export async function GET(request: NextRequest) {
     // Fetch data from external API
     const data = await fetchStreamsExternal(params);
     
+    // Transform the data to match the expected format
+    const transformedData = {
+      data: {
+        data: data.data,
+        metadata: {
+          total: data.total,
+          limit: data.limit,
+          offset: data.offset,
+        }
+      }
+    };
+    
     // Return the data with appropriate headers
-    return NextResponse.json(data, {
+    return NextResponse.json(transformedData, {
       headers: {
         'Cache-Control': 'no-store, no-cache, must-revalidate',
         'Pragma': 'no-cache',
