@@ -1,4 +1,4 @@
-import { StreamQueryParams, StreamsResponse, StreamsResponseSchema } from './types';
+import { StreamQueryParams, StreamsResponse, StreamsResponseSchema, Stream } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.pulstream.so';
 
@@ -137,7 +137,7 @@ export function calculateKpiData(streams: StreamsResponse['data']): {
  */
 export async function fetchAllStreamsForKpi(): Promise<{ totalParticipants: number; peakParticipants: number }> {
   try {
-    let allStreams: any[] = [];
+    let allStreams: Stream[] = [];
     let offset = 0;
     const limit = 50; // Use a safe limit
     let hasMore = true;

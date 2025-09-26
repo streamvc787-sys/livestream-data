@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, Suspense } from 'react';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { HeaderBar } from '@/components/HeaderBar';
 import { KpiCard } from '@/components/KpiCard';
@@ -12,7 +12,6 @@ import { ErrorState } from '@/components/ErrorState';
 import { StreamCardSkeleton } from '@/components/Skeletons';
 import { fetchStreams, calculateKpiData, fetchAllStreamsForKpi } from '@/lib/api';
 import { StreamFilters } from '@/lib/types';
-import { formatRelativeTime } from '@/lib/format';
 
 const POLLING_INTERVAL = 15000; // 15 seconds
 
@@ -123,8 +122,7 @@ function HomePageContent() {
 
   // Query for total participants across all streams
   const {
-    data: allStreamsKpi,
-    isLoading: isAllStreamsKpiLoading
+    data: allStreamsKpi
   } = useQuery({
     queryKey: ['all-streams-kpi'],
     queryFn: fetchAllStreamsForKpi,

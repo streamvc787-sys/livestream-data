@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import Image from 'next/image';
 import { Controls } from './Controls';
 import { StreamFilters } from '@/lib/types';
 
@@ -29,20 +31,22 @@ export function HeaderBar({
           {/* Logo and Title */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-6">
-              <img 
+              <Image 
                 src="/logo.svg" 
                 alt="Stream VC" 
+                width={32}
+                height={32}
                 className="h-8 w-auto"
               />
               
               {/* Category Links */}
               <div className="flex items-center space-x-4">
-                <a 
+                <Link 
                   href="/" 
                   className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   PumpFun
-                </a>
+                </Link>
                 <span className="text-sm text-muted-foreground cursor-not-allowed">
                   Twitch
                 </span>
