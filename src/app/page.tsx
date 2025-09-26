@@ -73,13 +73,14 @@ function HomePageContent() {
 
   // Pagination handlers
   const handlePageChange = useCallback((page: number) => {
+    const limit = Number(filters.limit) || 20;
     const newOffset = (page - 1) * limit;
     setCurrentPage(page);
     setFilters(prev => ({
       ...prev,
       offset: newOffset
     }));
-  }, [limit]);
+  }, [filters.limit]);
 
   // Countdown timer for polling
   useEffect(() => {
