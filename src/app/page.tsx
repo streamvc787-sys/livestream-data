@@ -73,13 +73,13 @@ function HomePageContent() {
 
   // Pagination handlers
   const handlePageChange = useCallback((page: number) => {
-    const newOffset = (page - 1) * (filters.limit || 20);
+    const newOffset = (page - 1) * limit;
     setCurrentPage(page);
     setFilters(prev => ({
       ...prev,
       offset: newOffset
     }));
-  }, [filters.limit]);
+  }, [limit]);
 
   // Countdown timer for polling
   useEffect(() => {
@@ -133,8 +133,9 @@ function HomePageContent() {
   });
 
   // Calculate pagination info
-  const totalStreams = streamsData?.total || 0;
-  const totalPages = Math.ceil(totalStreams / (filters.limit || 20));
+  const totalStreams = Number(streamsData?.total) || 0;
+  const limit = Number(filters.limit) || 20;
+  const totalPages = Math.ceil(totalStreams / limit);
   const hasNextPage = currentPage < totalPages;
   const hasPrevPage = currentPage > 1;
 
@@ -270,7 +271,7 @@ function HomePageContent() {
                 {totalPages > 1 && (
                   <div className="flex items-center justify-between mt-6">
                     <div className="text-sm text-muted-foreground">
-                      Showing {filters.offset + 1} to {Math.min(filters.offset + (filters.limit || 20), totalStreams)} of {totalStreams} streams
+                      Showing {filters.offset + 1} to {Math.min(filters.offset + limit, totalStreams)} of {totalStreams} streams
                     </div>
                     
                     <div className="flex items-center space-x-2">
