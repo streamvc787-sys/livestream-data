@@ -112,7 +112,7 @@ export async function fetchStreams(params: StreamQueryParams = {}): Promise<Stre
 /**
  * Calculate KPI data from streams
  */
-export function calculateKpiData(streams: StreamsResponse['data']): {
+export function calculateKpiData(streams: Stream[]): {
   totalStreams: number;
   totalParticipants: number;
   peakParticipants: number;

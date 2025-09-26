@@ -165,7 +165,7 @@ function HomePageContent() {
 
   // Calculate KPIs
   const kpiData = streamsData ? {
-    ...calculateKpiData(streamsData.data),
+    ...calculateKpiData(streamsData.data.data),
     totalStreams: streamsData.data.metadata?.total || 0,
     totalParticipants: allStreamsKpi?.totalParticipants || 0,
     peakParticipants: allStreamsKpi?.peakParticipants || 0
