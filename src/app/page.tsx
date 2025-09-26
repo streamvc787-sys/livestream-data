@@ -154,6 +154,10 @@ function HomePageContent() {
   }, [hasPrevPage, currentPage, handlePageChange]);
 
   // Filter streams by search
+  console.log('streamsData:', streamsData);
+  console.log('streamsData?.data:', streamsData?.data);
+  console.log('streamsData?.data?.data:', streamsData?.data?.data);
+  
   const filteredStreams = streamsData?.data?.data?.filter(stream => {
     if (!filters.search) return true;
     const searchLower = filters.search.toLowerCase();
