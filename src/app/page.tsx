@@ -119,7 +119,14 @@ function HomePageContent() {
     }),
     refetchInterval: isPolling ? POLLING_INTERVAL : false,
     refetchIntervalInBackground: false,
-  });
+  }) as {
+    data: any;
+    isLoading: boolean;
+    isError: boolean;
+    error: Error | null;
+    refetch: () => void;
+    isRefetching: boolean;
+  };
 
   // Query for total participants across all streams
   const {
@@ -249,7 +256,7 @@ function HomePageContent() {
             ) : isError ? (
               <ErrorState
                 title="Failed to load streams"
-                description={error ? String(error) : "Something went wrong while loading the streams."}
+                description={error?.message || "Something went wrong while loading the streams."}
                 onAction={handleRefresh}
               />
             ) : filteredStreams.length === 0 ? (

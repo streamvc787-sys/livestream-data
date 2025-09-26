@@ -4,7 +4,7 @@ export function KpiCard({ label, value, valueLabel}:{ label: string; value?: num
   return (
     <div className="card-surface p-4">
       <div className="text-xs text-white/60 mb-1">{label}</div>
-      <div className="text-2xl font-semibold tracking-tight">{valueLabel ?? compactNumber(value)}</div>
+      <div className="text-2xl font-semibold tracking-tight">{valueLabel ?? compactNumber(value ?? 0)}</div>
     </div>
   );
 }
