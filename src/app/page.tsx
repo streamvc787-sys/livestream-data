@@ -249,7 +249,7 @@ function HomePageContent() {
             ) : isError ? (
               <ErrorState
                 title="Failed to load streams"
-                description={error && typeof error === 'object' && 'message' in error ? String(error.message) : "Something went wrong while loading the streams."}
+                description={error ? String(error) : "Something went wrong while loading the streams."}
                 onAction={handleRefresh}
               />
             ) : filteredStreams.length === 0 ? (
