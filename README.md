@@ -1,279 +1,171 @@
-# Pulstream Live - Live Stream Analytics Dashboard
+# Livestream Analytics Dashboard
 
-A production-ready web application that replicates the style and design of [pulstream.so/live](https://pulstream.so/live), built with Next.js 14, TypeScript, and Tailwind CSS.
+A production-ready web application that provides real-time analytics and leaderboard for livestreams powered by the Pulstream API. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
-## Features
+![Dashboard Preview](https://via.placeholder.com/800x400/1a1a1a/ffffff?text=Livestream+Analytics+Dashboard)
+
+## 🚀 Live Demo
+
+[View Live Demo](https://your-vercel-url.vercel.app) <!-- Replace with your actual deployment URL -->
+
+## ✨ Features
 
 - **Real-time Data**: Live polling every 15 seconds with toggleable auto-refresh
 - **Responsive Design**: Mobile-first design that works on all screen sizes
-- **Dark Theme**: Sleek dark UI with glassy card effects matching pulstream.so
+- **Dark Theme**: Sleek dark UI with glassy card effects
 - **Interactive Controls**: Search, sort, and filter streams with URL state persistence
-- **Leaderboard Table**: Sortable table with participant counts, uptime, and status
-- **Live Cards**: Compact stream cards in the sidebar
-- **KPI Dashboard**: Key metrics including total streams, participants, and peak counts
+- **Leaderboard Table**: Sortable table with participant counts, uptime, and engagement metrics
+- **Trending Streams**: Compact stream cards in the sidebar
+- **KPI Dashboard**: Key metrics including total streams, viewers, and peak counts
 - **Error Handling**: Graceful error states and loading skeletons
 - **Type Safety**: Full TypeScript support with Zod validation
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 - **Data Fetching**: TanStack Query (React Query)
-- **Icons**: Lucide React
 - **Validation**: Zod
-- **Charts**: Recharts (ready for future enhancements)
+- **Icons**: Lucide React
+- **Deployment**: Vercel (recommended)
 
-## Getting Started
+## 📊 Data Sources
+
+- **API**: [Pulstream API](https://api.pulstream.so)
+- **Data Points**: Stream participants, chat members, replies, market cap, and more
+- **Real-time Updates**: Live polling with configurable intervals
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 18+ 
-- npm or pnpm
+- npm or yarn
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/yourusername/livestream-data.git
    cd livestream-data
    ```
 
 2. **Install dependencies**
    ```bash
    npm install
-   # or
-   pnpm install
    ```
 
-3. **Set up shadcn/ui** (if not already done)
-   ```bash
-   npx shadcn@latest init
-   ```
-
-4. **Add required components**
-   ```bash
-   npx shadcn@latest add button input select card badge skeleton table dialog separator tooltip switch
-   ```
-
-5. **Start the development server**
+3. **Run the development server**
    ```bash
    npm run dev
-   # or
-   pnpm dev
    ```
 
-6. **Open your browser**
+4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## Configuration
-
-### API Configuration
-
-The app uses the Pulstream API by default. To change the API endpoint:
-
-1. **Environment Variables** (recommended):
-   Create a `.env.local` file:
-   ```env
-   NEXT_PUBLIC_API_BASE_URL=https://your-api-endpoint.com
-   ```
-
-2. **Direct Code Change**:
-   Update the `API_BASE_URL` in `src/lib/api.ts`:
-   ```typescript
-   const API_BASE_URL = 'https://your-api-endpoint.com';
-   ```
-
-### Customizing API Schema
-
-If the API returns different field names, update the Zod schema in `src/lib/types.ts`:
-
-```typescript
-export const StreamSchema = z.object({
-  id: z.string(),
-  title: z.string().optional(),
-  // Add your custom fields here
-  custom_field: z.string().optional(),
-}).passthrough(); // Allows unknown fields
-```
-
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 src/
 ├── app/
-│   ├── api/streams/route.ts    # API proxy endpoint
-│   ├── globals.css             # Global styles and dark theme
-│   ├── layout.tsx              # Root layout with providers
-│   └── page.tsx                # Main dashboard page
+│   ├── api/streams/          # API routes
+│   ├── globals.css           # Global styles
+│   ├── layout.tsx            # Root layout
+│   └── page.tsx              # Main dashboard page
 ├── components/
-│   ├── ui/                     # shadcn/ui components
-│   ├── Controls.tsx            # Search, sort, and filter controls
-│   ├── ErrorState.tsx          # Error state component
-│   ├── EmptyState.tsx          # Empty state component
-│   ├── HeaderBar.tsx           # Sticky header with controls
-│   ├── KpiCard.tsx             # KPI metric cards
-│   ├── Skeletons.tsx           # Loading skeleton components
-│   ├── StreamCard.tsx          # Stream card for sidebar
-│   ├── StreamRow.tsx           # Table row component
-│   └── StreamTable.tsx         # Main leaderboard table
+│   ├── ui/                   # Reusable UI components
+│   ├── Controls.tsx          # Search and filter controls
+│   ├── HeaderBar.tsx         # Top navigation bar
+│   ├── StreamCard.tsx        # Stream card component
+│   ├── StreamTable.tsx       # Main data table
+│   └── ...                   # Other components
 └── lib/
-    ├── api.ts                  # API client and data fetching
-    ├── format.ts               # Utility functions for formatting
-    ├── providers.tsx           # TanStack Query provider
-    ├── types.ts                # TypeScript types and Zod schemas
-    └── utils.ts                # shadcn/ui utilities
+    ├── api.ts                # API client and data fetching
+    ├── format.ts             # Utility functions for formatting
+    ├── providers.tsx         # React Query provider
+    ├── types.ts              # TypeScript types and Zod schemas
+    └── utils.ts              # shadcn/ui utilities
 ```
 
-## API Integration
+## 🔧 Configuration
 
-### Endpoint
+### Environment Variables
 
-The app proxies requests to the external API through `/api/streams` to avoid CORS issues.
+Create a `.env.local` file in the root directory:
 
-**Supported Query Parameters:**
-- `limit`: Number of results (1-1000, default: 20)
-- `offset`: Pagination offset (default: 0)
-- `sort_by`: Sort field (`num_participants`, `created_at`, `started_at`, `viewer_count`)
-- `sort_order`: Sort direction (`ASC`, `DESC`)
-
-### Data Schema
-
-The app expects the API to return data in this format:
-
-```typescript
-{
-  data: Array<{
-    id: string;
-    title?: string;
-    name?: string;
-    handle?: string;
-    num_participants?: number;
-    viewer_count?: number;
-    thumbnail_url?: string;
-    status?: string;
-    started_at?: string;
-    created_at?: string;
-    updated_at?: string;
-    // Additional fields are supported via .passthrough()
-  }>;
-  total?: number;
-  limit?: number;
-  offset?: number;
-}
+```env
+NEXT_PUBLIC_API_BASE_URL=https://api.pulstream.so
 ```
 
-## Features in Detail
+### API Integration
 
-### Real-time Updates
+The app integrates with the Pulstream API to fetch real-time stream data:
 
-- **Polling**: Automatic refresh every 15 seconds when enabled
-- **Countdown**: Visual indicator showing time until next refresh
-- **Toggle**: Easy on/off switch for live updates
-- **Background**: Continues polling when tab is active
+- **Endpoint**: `/streamstats`
+- **Parameters**: `limit`, `offset`, `sort_by`, `sort_order`
+- **Data**: Stream participants, chat members, replies, market metrics
 
-### Responsive Design
+## 📱 Responsive Design
 
-- **Mobile**: Table collapses to card layout on small screens
-- **Tablet**: Optimized layout for medium screens
+- **Mobile**: Table collapses to card layout
+- **Tablet**: Optimized layout for medium screens  
 - **Desktop**: Full leaderboard + sidebar layout
 
-### URL State Management
-
-All filters and sorting options are reflected in the URL:
-- `?search=keyword` - Search term
-- `?sortBy=num_participants` - Sort field
-- `?sortOrder=DESC` - Sort direction
-- `?limit=50` - Results per page
-- `?offset=20` - Pagination offset
-
-### Error Handling
-
-- **Network Errors**: Graceful fallback with retry options
-- **API Errors**: Clear error messages with action buttons
-- **Loading States**: Skeleton components during data fetching
-- **Empty States**: Helpful messages when no data is found
-
-## Customization
+## 🎨 Customization
 
 ### Styling
+- Modify `src/app/globals.css` for global styles
+- Update Tailwind config in `tailwind.config.js`
+- Customize component styles in individual component files
 
-The app uses a custom dark theme inspired by pulstream.so. To modify:
+### Data Display
+- Update column headers in `src/components/StreamTable.tsx`
+- Modify KPI calculations in `src/lib/api.ts`
+- Adjust formatting functions in `src/lib/format.ts`
 
-1. **Colors**: Update CSS variables in `src/app/globals.css`
-2. **Components**: Modify shadcn/ui component styles
-3. **Layout**: Adjust grid and spacing in component files
-
-### Adding New Features
-
-1. **New API Fields**: Update the Zod schema in `types.ts`
-2. **New Components**: Add to `components/` directory
-3. **New Pages**: Add to `app/` directory following Next.js 14 conventions
-
-## Performance
-
-- **Code Splitting**: Automatic with Next.js 14
-- **Image Optimization**: Next.js Image component for thumbnails
-- **Query Caching**: TanStack Query for efficient data management
-- **Skeleton Loading**: Perceived performance improvements
-
-## Browser Support
-
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-## Deployment
+## 🚀 Deployment
 
 ### Vercel (Recommended)
 
-1. Push to GitHub
-2. Connect to Vercel
-3. Deploy automatically
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Deploy automatically with zero configuration
 
 ### Other Platforms
 
-1. Build the project:
-   ```bash
-   npm run build
-   ```
+- **Netlify**: Connect GitHub repository
+- **Railway**: Auto-detects Next.js
+- **Docker**: Use the included Dockerfile
 
-2. Start production server:
-   ```bash
-   npm start
-   ```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **API CORS Errors**: The app uses a proxy endpoint to avoid CORS
-2. **Type Errors**: Ensure all API fields are properly typed in `types.ts`
-3. **Styling Issues**: Check Tailwind CSS configuration and dark mode setup
-
-### Debug Mode
-
-Enable React Query DevTools in development:
-- The devtools are included and will show in the bottom-left corner
-- Click to inspect queries, cache, and mutations
-
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
-MIT License - see LICENSE file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Credits
+## 🙏 Acknowledgments
 
-- **Design Inspiration**: [pulstream.so](https://pulstream.so/live)
-- **API**: [Pulstream API](https://api.pulstream.so)
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com)
-- **Icons**: [Lucide React](https://lucide.dev)
+- [Pulstream](https://pulstream.so) for the API
+- [shadcn/ui](https://ui.shadcn.com) for the UI components
+- [Next.js](https://nextjs.org) for the framework
+- [Tailwind CSS](https://tailwindcss.com) for styling
+
+## 📞 Support
+
+If you have any questions or need help, please:
+
+1. Check the [Issues](https://github.com/yourusername/livestream-data/issues) page
+2. Create a new issue if your problem isn't already reported
+3. Contact the maintainers
+
+---
+
+**Made with ❤️ for the livestream community**
