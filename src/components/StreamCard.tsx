@@ -53,7 +53,7 @@ export function StreamCard({ item }:{ item: unknown }){
           <Badge variant={status==='LIVE' ? 'default':'secondary'} className={status==='LIVE'?'bg-green-600':'bg-white/10'}>{status || '–'}</Badge>
         </div>
         <div className="text-xs text-white/60 truncate">{handle}</div>
-        <div className="text-sm mt-1">👥 {compactNumber(streamItem.num_participants)} <span className="text-white/50">·</span> ⏱ {uptimeFrom(streamItem.started_at || streamItem.created_at)} <span className="text-white/50">·</span> {updatedLabel(streamItem.updated_at)}</div>
+        <div className="text-sm mt-1">👥 {compactNumber(streamItem.num_participants ?? 0)} <span className="text-white/50">·</span> ⏱ {uptimeFrom(streamItem.started_at || streamItem.created_at)} <span className="text-white/50">·</span> {updatedLabel(streamItem.updated_at)}</div>
       </div>
     </div>
   );
