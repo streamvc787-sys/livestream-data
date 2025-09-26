@@ -134,7 +134,7 @@ function HomePageContent() {
   });
 
   // Calculate pagination info
-  const totalStreams = Number(streamsData?.total) || 0;
+  const totalStreams = Number(streamsData?.data?.metadata?.total) || 0;
   const limit = Number(filters.limit) || 20;
   const totalPages = Math.ceil(totalStreams / limit);
   const hasNextPage = currentPage < totalPages;
@@ -154,7 +154,7 @@ function HomePageContent() {
   }, [hasPrevPage, currentPage, handlePageChange]);
 
   // Filter streams by search
-  const filteredStreams = streamsData?.data?.filter(stream => {
+  const filteredStreams = streamsData?.data?.data?.filter(stream => {
     if (!filters.search) return true;
     const searchLower = filters.search.toLowerCase();
     const title = stream.title || stream.name || '';
@@ -165,8 +165,8 @@ function HomePageContent() {
 
   // Calculate KPIs
   const kpiData = streamsData ? {
-    ...calculateKpiData(streamsData.data),
-    totalStreams: streamsData.total || 0,
+    ...calculateKpiData(streamsData.data.data),
+    totalStreams: streamsData.data.metadata?.total || 0,
     totalParticipants: allStreamsKpi?.totalParticipants || 0,
     peakParticipants: allStreamsKpi?.peakParticipants || 0
   } : null;
