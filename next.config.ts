@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       "prod-livestream-thumbnails-841162682567.s3.us-east-1.amazonaws.com",
+      "thumbnails.pump.fun",
       "ipfs.io",
     ],
   },
